@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Models;
+using SocialNetwork.Repository;
 
 namespace SocialNetwork.Controllers
 {
     public class MessagesController : Controller
     {
-        private readonly List<Message> _messages = new List<Message>();
 
         public IActionResult Index()
         {
-            return View(_messages);
+            return View(MessagesRepository._messages);
         }
 
         public IActionResult Create()
@@ -19,10 +19,14 @@ namespace SocialNetwork.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Message message)
+        public IActionResult Create(int User, string Text)
         {
+            var message = new Message();
+            message.UserId = User;
+            message.Text = Text;
             message.CreatedAt = DateTime.Now;
-            _messages.Add(message);
+            MessagesRepository.AddMessage(message);
+
             return RedirectToAction(nameof(Index));
         }
     }

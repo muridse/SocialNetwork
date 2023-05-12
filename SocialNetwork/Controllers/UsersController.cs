@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Models;
+using SocialNetwork.Repository;
 
 namespace SocialNetwork.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly List<User> _users = new List<User>();
+        
 
         public IActionResult Index()
         {
-            return View(_users);
+            return View(UsersRepository._users);
         }
 
         public IActionResult Create()
@@ -19,9 +20,14 @@ namespace SocialNetwork.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Create(string Name, string Email, string Password)
         {
-            _users.Add(user);
+            var user = new User();
+            user.Name = Name;
+            user.Email = Email; 
+            user.Password = Password;
+            user.Id = UsersRepository._users.Count;
+            UsersRepository.AddUser(user);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -3,16 +3,24 @@
 *@
 @{
 }
-<h1>Create Message</h1>
 
-<form asp-action="Create">
+@model Message
+
+<h1>Отправить сообщение</h1>
+
+<form method="post" asp-action="Create">
+
+    <div class="form-group">
+        <label as-for="User">User</label>
+        <input as-for="User" class="form-control" name="User" />
+    </div>
     <div class="form-group">
         <label as-for="Text">Text</label>
-        <input as-for="Text" class="form-control" />
+        <input type="email" as-for="Text" class="form-control" name="Text" />
     </div>
+
     <div class="form-group">
-    <label as-for="UserId">User</label>
-    <input as-for="UserId" class="form-control" />
+        <button type="submit" class="btn btn-primary">Create</button>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+
 </form>
